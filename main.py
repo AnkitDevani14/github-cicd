@@ -67,7 +67,7 @@ for folder in folders:
     print(version)
     print(applied_versions)
     print(version in applied_versions)
-    if version in applied_versions:
+    if applied_versions in version:
         print(f"⏩ Skipping already applied version {version}")
         continue
     
