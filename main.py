@@ -66,8 +66,11 @@ for folder in folders:
     version = os.path.basename(folder)
     print(version)
     print(applied_versions)
-    print(version in applied_versions)
-    if applied_versions in version:
+    prefix = "_".join(version.split("_")[0:3])   # W_V1_1
+    print(prefix)  # "W_V1_1"
+
+    # Compare
+    if prefix in applied_versions:
         print(f"⏩ Skipping already applied version {version}")
         continue
     
