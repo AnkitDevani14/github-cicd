@@ -1,0 +1,8 @@
+{
+  "account": "your_snowflake_account",
+  "username": "PROD_USER",
+  "warehouse": "PROD_WH",
+  "database": "PROD_DB",
+  "role": "PROD_ROLE",
+  "password": "your_secure_password"
+}
