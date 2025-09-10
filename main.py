@@ -92,16 +92,16 @@ for file in files:
         traceback.print_exc()
         any_failed = True
 
-        # Insert log entry
-        try:
-            cur.execute("""
-                INSERT INTO MIGRATION.DBO.MIGRATION_LOGS (env, db_name, version, file_name, status, error_message)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """, ('prod', db_name, version, os.path.basename(sql_file), status, error_message))
-        except Exception as e:
-            print(f"❌ Failed to insert log for {sql_file}: {e}")
-            traceback.print_exc()
-            any_failed = True
+    # Insert log entry
+    try:
+        cur.execute("""
+            INSERT INTO MIGRATION.DBO.MIGRATION_LOGS (env, db_name, version, file_name, status, error_message)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, ('prod', db_name, version, os.path.basename(sql_file), status, error_message))
+    except Exception as e:
+        print(f"❌ Failed to insert log for {sql_file}: {e}")
+        traceback.print_exc()
+        any_failed = True
 
 conn.close()
 print("✅ Migration script completed")
