@@ -64,13 +64,16 @@ any_failed = False
 
 for folder in folders:
     version = os.path.basename(folder)
+    print(version)
+    print(applied_versions)
+    print(version in applied_versions)
     if version in applied_versions:
         print(f"⏩ Skipping already applied version {version}")
         continue
     
     print(folder)
     print(f"🚀 Applying version: {version}")
-    sql_files = sorted(glob.glob(f"{folder}/*.sql"))
+    sql_files = sorted(glob.glob(f"{folder}"))
     print(sql_files)
     for sql_file in sql_files:
         db_name = sql_file.split("/")[-2]
