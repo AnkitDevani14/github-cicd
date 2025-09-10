@@ -69,12 +69,13 @@ for folder in folders:
 
     print(f"🚀 Applying version: {version}")
     sql_files = sorted(glob.glob(f"{folder}/*.sql"))
+    print(sql_files)
     for sql_file in sql_files:
         db_name = sql_file.split("/")[-2]
         print(f"▶️ Running {sql_file} ...")
         with open(sql_file, "r") as f:
             sql = f.read()
-
+            print(sql)
         try:
             cur.execute(sql)
             status, error_message = "SUCCESS", None
