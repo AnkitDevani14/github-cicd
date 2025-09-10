@@ -57,6 +57,7 @@ if not applied_versions:
 # Migration path
 migration_path = f"source_code/prod/migration/*"
 folders = sorted(glob.glob(migration_path))
+print(folders)
 print(f"🔍 Found {len(folders)} migration folders")
 
 any_failed = False
@@ -66,7 +67,8 @@ for folder in folders:
     if version in applied_versions:
         print(f"⏩ Skipping already applied version {version}")
         continue
-
+    
+    print(folder)
     print(f"🚀 Applying version: {version}")
     sql_files = sorted(glob.glob(f"{folder}/*.sql"))
     print(sql_files)
