@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS MIGRATION.DBO.MIGRATION_LOGS (
 
 # Get last applied versions from Snowflake
 # cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env = %s", (env,))
-cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env = %s", ("prod",))
+cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env = 'prod'")
 applied_versions = {row[0] for row in cur.fetchall()}
 
 if not applied_versions:
