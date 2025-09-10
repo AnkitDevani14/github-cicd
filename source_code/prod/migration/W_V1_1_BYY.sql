@@ -1,4 +1,4 @@
-Create or replace table BYY.DBO.BYY_GLIDE_PATH_2
+Create or replace table BYY.DBO.BYY_GLIDE_PATH_3
 (
     PATH_ID               NUMBER(10)       NOT NULL,
     PATH_NAME             VARCHAR2(100)    NOT NULL,
