@@ -48,51 +48,49 @@ except Exception as e:
     sys.exit(1)
 
 # Get last applied versions
-cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env = 'prod'")
+cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env = 'prod' and STATUS = 'SUCCESS'")
 applied_versions = {row[0] for row in cur.fetchall()}
+print(applied_versions)
 if not applied_versions:
     print("⚠️ No previous versions found, starting fresh from first migration")
     applied_versions = set()
 
 # Migration path
 migration_path = f"source_code/prod/migration/*"
-folders = sorted(glob.glob(migration_path))
-print(folders)
-print(f"🔍 Found {len(folders)} migration folders")
+files = sorted(glob.glob(migration_path))
+print(files)
+print(f"🔍 Found {len(files)} migration files")
 
 any_failed = False
 
-for folder in folders:
-    version = os.path.basename(folder)
+for file in files:
+    version = os.path.basename(file)
     print(version)
     print(applied_versions)
-    prefix = "_".join(version.split("_")[0:3])   # W_V1_1
-    print(prefix)  # "W_V1_1"
+    print(file)
 
     # Compare
-    if prefix in applied_versions:
+    if version in applied_versions:
         print(f"⏩ Skipping already applied version {version}")
         continue
     
-    print(folder)
+    print(file)
     print(f"🚀 Applying version: {version}")
-    sql_files = sorted(glob.glob(f"{folder}"))
-    print(sql_files)
-    for sql_file in sql_files:
-        db_name = sql_file.split("/")[-2]
-        print(f"▶️ Running {sql_file} ...")
-        with open(sql_file, "r") as f:
-            sql = f.read()
-            print(sql)
-        try:
-            cur.execute(sql)
-            status, error_message = "SUCCESS", None
-            print(f"✅ Success: {sql_file}")
-        except Exception as e:
-            status, error_message = "FAILED", str(e)
-            print(f"❌ Failed: {sql_file}\n   Error: {error_message}")
-            traceback.print_exc()
-            any_failed = True
+    sql_file = file
+    db_name = sql_file.split("_")[-1]
+    print(f"▶️ Running {sql_file} ...")
+    with open(sql_file, "r") as f:
+        sql = f.read()
+        print(sql)
+    try:
+        cur.execute(sql)
+        status, error_message = "SUCCESS", None
+        print(f"✅ Success: {sql_file}")
+    except Exception as e:
+        status, error_message = "FAILED", str(e)
+        print(f"❌ Failed: {sql_file}\n   Error: {error_message}")
+        traceback.print_exc()
+        any_failed = True
 
         # Insert log entry
         try:
