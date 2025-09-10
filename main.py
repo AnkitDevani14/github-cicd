@@ -52,7 +52,7 @@ cur.execute("SELECT DISTINCT version FROM MIGRATION.DBO.MIGRATION_LOGS WHERE env
 applied_versions = {row[0] for row in cur.fetchall()}
 if not applied_versions:
     print("⚠️ No previous versions found, starting fresh from first migration")
-    applied_versions = set(['W_V1_1'])
+    applied_versions = set()
 
 # Migration path
 migration_path = f"source_code/prod/migration/*"
