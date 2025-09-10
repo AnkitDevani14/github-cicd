@@ -1,4 +1,4 @@
-name: Pylint
+name: Migrate DDL
 
 on: 
   pull_request:
