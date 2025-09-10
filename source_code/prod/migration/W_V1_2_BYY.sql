@@ -1,0 +1,2 @@
+alter table BYY.DBO.BYY_GLIDE_PATH_5
+add column NEW_COLUMN_3 VARCHAR2(50);
