@@ -6,6 +6,7 @@ on:
       - closed   # trigger when PR is closed
     branches:
       - main
+  workflow_dispatch:  # allow manual trigger
 
 jobs:
   build:
@@ -29,4 +30,6 @@ jobs:
 
       # Run your Python script
       - name: Run script
+        env:
+          demo: ${{ secrets.DEBSDFDSF }}
         run: python main.py
