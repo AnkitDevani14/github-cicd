@@ -12,6 +12,8 @@ with open(config_file) as f:
 
 print("✅ Loaded config successfully")
 
+demo = os.environ.get("demo", "Not Set")
+print(f"Demo env var: {demo}")
 # Connect to Snowflake
 try:
     conn = snowflake.connector.connect(
