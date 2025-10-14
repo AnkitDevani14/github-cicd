@@ -87,7 +87,7 @@ for file in files:
         sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
         print(sql)
     try:
-        cur.execute(sql)
+        cur.executemany(sql)
         status, error_message = "SUCCESS", None
         print(f"✅ Success: {sql_file}")
     except Exception as e:
