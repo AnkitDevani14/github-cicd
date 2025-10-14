@@ -84,8 +84,8 @@ for file in files:
     print(f"▶️ Running {sql_file} ...")
     with open(sql_file, "r") as f:
         sql = f.read()
-        print(sql)
         sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
+        print(sql)
     try:
         cur.execute(sql)
         status, error_message = "SUCCESS", None
