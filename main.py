@@ -85,21 +85,13 @@ for file in files:
     with open(sql_file, "r") as f:
         sql = f.read()
         sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
-        # print(sql)
+        print(sql)
     try:
-        statements = re.split(r';(?=(?:[^$]*\$[^$]*\$)*[^$]*$)', sql)
-
-        for stmt in statements:
-            stmt = stmt.strip()
-            print(f"Statement: {stmt}")
-            if stmt:
-                print(f"\n▶️ Running statement:\n{stmt}\n")
-                cur.execute(stmt)
-                print("✅ Success")
-
-        conn.commit()
-
-
+        for cs in conn.execute_stream(sql):
+            print(cs)
+        # cur.executemany(sql)
+        status, error_message = "SUCCESS", None
+        print(f"✅ Success: {sql_file}")
     except Exception as e:
         status, error_message = "FAILED", str(e)
         print(f"❌ Failed: {sql_file}\n   Error: {error_message}")
