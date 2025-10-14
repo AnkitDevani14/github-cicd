@@ -85,12 +85,13 @@ for file in files:
     with open(sql_file, "r") as f:
         sql = f.read()
         sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
-        print(sql)
+        # print(sql)
     try:
         statements = re.split(r';(?=(?:[^$]*\$[^$]*\$)*[^$]*$)', sql)
 
         for stmt in statements:
             stmt = stmt.strip()
+            print(f"Statement: {stmt}")
             if stmt:
                 print(f"\n▶️ Running statement:\n{stmt}\n")
                 cur.execute(stmt)
