@@ -4,6 +4,7 @@ import snowflake.connector
 import json
 import sys
 import traceback
+import re
 
 # Config
 config_file = f"config/prod/prod_config.json"
@@ -84,6 +85,7 @@ for file in files:
     with open(sql_file, "r") as f:
         sql = f.read()
         print(sql)
+        sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
     try:
         cur.execute(sql)
         status, error_message = "SUCCESS", None

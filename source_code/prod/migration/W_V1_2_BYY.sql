@@ -1,2 +1,2 @@
-alter table BYY.DBO.BYY_GLIDE_PATH_5
+alter table ASQN_DEV_BYY_DB.DBO.BYY_GLIDE_PATH_5
 add column NEW_COLUMN_3 VARCHAR2(50);
