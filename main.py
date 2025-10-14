@@ -4,7 +4,7 @@ import snowflake.connector
 import json
 import sys
 import traceback
-import re
+import re,io
 
 # Config
 config_file = f"config/prod/prod_config.json"
@@ -83,14 +83,15 @@ for file in files:
     db_name = sql_file.split("_")[-1]
     print(f"▶️ Running {sql_file} ...")
     with open(sql_file, "r") as f:
-        # sql = f.read()
-        # sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
-        # print(sql)
+        sql = f.read()
+        sql = re.sub(r"ASQN_DEV", "ASQN_PRD", sql, flags=re.IGNORECASE)
+        print(sql)
         try:
-            for cs in conn.execute_stream(f):
-                sql = re.sub(r"ASQN_DEV", "ASQN_PRD", cs, flags=re.IGNORECASE)
-                print(sql)
-            # cur.executemany(sql)
+            sql_stream = io.StringIO(sql)
+
+            # Execute SQL statements from stream
+            for cs in conn.execute_stream(sql_stream):
+                print(f"✅ Executed statement: {cs}")
             status, error_message = "SUCCESS", None
             print(f"✅ Success: {sql_file}")
         except Exception as e:
