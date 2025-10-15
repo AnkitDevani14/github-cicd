@@ -1,9 +1,0 @@
-Create or replace table ASQN_dev_BYY_DB.DBO.BYY_GLIDE_PATH_57
-(
-    PATH_ID               NUMBER(10)       NOT NULL,
-    PATH_NAME             VARCHAR2(100)    NOT NULL,
-    PATH_DESCRIPTION      VARCHAR2(255),
-    CREATED_AT            TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_AT            TIMESTAMP        DEFAULT CURRENT_TIMESTAMP 
-
-);
